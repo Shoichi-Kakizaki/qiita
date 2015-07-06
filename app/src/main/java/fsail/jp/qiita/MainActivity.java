@@ -1,7 +1,11 @@
 package fsail.jp.qiita;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
@@ -38,6 +42,17 @@ public class MainActivity extends Activity {
         }
         ListView qiitaList = (ListView)findViewById(R.id.listView1);
         qiitaList.setAdapter(adapter);
+
+        /* webViewに遷移する */
+        qiitaList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+                intent.putExtra("uri", mUris.get(position));
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
