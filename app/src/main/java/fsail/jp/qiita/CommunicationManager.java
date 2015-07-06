@@ -33,7 +33,7 @@ public class CommunicationManager {
                         Log.d("Qiita","responzse : " + response);
                         mResponse = response;
                         // 非同期でeventBusにpostする
-                        eventBus.post(new AsyncEvent(true, mResponse));
+                        eventBus.post(new AsyncQiita(true, mResponse));
                     }
                 }, null));
 
