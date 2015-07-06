@@ -5,19 +5,24 @@ import android.util.Log;
 
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by kakizaki_shoichi on 2015/04/12.
  */
-    public class CommunicationManager {
+public class CommunicationManager {
     private RequestQueue mQueue;
     private JSONArray mResponse;
+    private final EventBus eventBus;
 
-    public JSONArray  getQiita(Context context) {
+    public CommunicationManager(){
+        eventBus = EventBus.getDefault();
+    }
+
+    public void getQiita(Context context) {
         // Volley でリクエスト
         mQueue = Volley.newRequestQueue(context);
         String url = "https://qiita.com/api/v2/items";
@@ -25,11 +30,13 @@ import org.json.JSONArray;
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.d("Qiita","responzse : " + response.toString());
+                        Log.d("Qiita","responzse : " + response);
                         mResponse = response;
+                        // 非同期でeventBusにpostする
+                        eventBus.post(new AsyncEvent(true, mResponse));
                     }
                 }, null));
-        return mResponse;
+
     }
 
 }
