@@ -20,9 +20,9 @@ import fsail.jp.qiita.R;
 
 public class Content extends Fragment {
 
+
     @InjectView(R.id.webView1)
     WebView mWebView;
-
     private View mV;
     private Activity mActivity;
 
